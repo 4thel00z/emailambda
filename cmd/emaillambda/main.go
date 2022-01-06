@@ -61,7 +61,8 @@ func HandleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (
 	}
 
 	res, err := g.Send(email)
-
+	log.Printf("Response:\n%#v", res)
+	
 	if err != nil {
 		return events.APIGatewayProxyResponse{Body: err.Error(), StatusCode: http.StatusInternalServerError}, err
 	}
