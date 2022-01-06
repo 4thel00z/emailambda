@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"crypto/subtle"
-	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"github.com/4thel00z/libemail/pkg/v1/libemail"
@@ -24,11 +23,7 @@ var (
 )
 
 func init() {
-	basicAuthTemp := os.Getenv("BASIC_AUTH")
-	if basicAuthTemp == "" {
-		log.Fatalln("BASIC_AUTH env var is not set!")
-	}
-	basicAuth = "Basic " + base64.StdEncoding.EncodeToString([]byte("emailambda:"+basicAuthTemp))
+	basicAuth = os.Getenv("BASIC_AUTH")
 
 	g = senders.GmailSender{}
 	token, err := gmail.LoadTokenFromEnv("GMAIL_TOKEN")
@@ -47,9 +42,7 @@ func init() {
 }
 
 func HandleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	log.Println("all headers", request.Headers)
-	auth := request.Headers["Authorization"]
-
+	auth := request.Headers["authorization"]
 	if 1 != subtle.ConstantTimeCompare([]byte(auth), []byte(basicAuth)) {
 		log.Println("received: ", auth)
 		log.Println("expected: ", basicAuth)
