@@ -49,6 +49,8 @@ func init() {
 func HandleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	auth := request.Headers["Authorization"]
 	if 1 != subtle.ConstantTimeCompare([]byte(auth), []byte(basicAuth)) {
+		log.Println("received: ", auth)
+		log.Println("expected: ", basicAuth)
 		return events.APIGatewayProxyResponse{
 			Body: "",
 			Headers: map[string]string{
