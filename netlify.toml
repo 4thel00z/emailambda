@@ -1,0 +1,12 @@
+[build]
+  base = "/"
+  functions = "/functions"
+  command = "make build"
+
+[build.environment]
+  GO_VERSION = "1.17"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
