@@ -4,3 +4,5 @@ functions
 
 # Local Netlify folder
 .netlify
+credentials.json
+token.json
