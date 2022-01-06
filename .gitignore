@@ -1,3 +1,6 @@
 functions
 .idea
 .env
+
+# Local Netlify folder
+.netlify
