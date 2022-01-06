@@ -6,6 +6,7 @@ import (
 	"crypto/subtle"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"github.com/4thel00z/libemail/pkg/v1/libemail"
 	"github.com/4thel00z/libemail/pkg/v1/libemail/gmail"
 	"github.com/4thel00z/libemail/pkg/v1/libemail/senders"
@@ -53,6 +54,7 @@ func HandleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (
 
 	}
 	var email libemail.Email
+	fmt.Println(request.Body)
 	err := json.NewDecoder(strings.NewReader(request.Body)).Decode(&email)
 	if err != nil {
 		return events.APIGatewayProxyResponse{Body: "", StatusCode: http.StatusBadRequest}, err
