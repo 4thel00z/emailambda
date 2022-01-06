@@ -36,6 +36,9 @@ func init() {
 		log.Fatalln(err.Error())
 	}
 
+	log.Println(config)
+	log.Println(token)
+
 	err = g.Init(config, token)
 	if err != nil {
 		log.Fatalln(err.Error())
