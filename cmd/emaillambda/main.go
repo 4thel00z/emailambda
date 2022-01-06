@@ -52,13 +52,13 @@ func HandleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (
 			StatusCode: http.StatusUnauthorized}, errors.New("not authorized")
 
 	}
-	var email *libemail.Email
-	err := json.NewDecoder(strings.NewReader(request.Body)).Decode(email)
+	var email libemail.Email
+	err := json.NewDecoder(strings.NewReader(request.Body)).Decode(&email)
 	if err != nil {
 		return events.APIGatewayProxyResponse{Body: "", StatusCode: http.StatusBadRequest}, err
 	}
 
-	res, err := g.Send(email)
+	res, err := g.Send(&email)
 	log.Printf("%#v", res)
 
 	if err != nil {
