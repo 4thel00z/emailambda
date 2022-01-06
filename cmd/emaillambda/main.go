@@ -44,8 +44,6 @@ func init() {
 func HandleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	auth := request.Headers["authorization"]
 	if 1 != subtle.ConstantTimeCompare([]byte(auth), []byte(basicAuth)) {
-		log.Println("received: ", auth)
-		log.Println("expected: ", basicAuth)
 		return events.APIGatewayProxyResponse{
 			Body: "",
 			Headers: map[string]string{
@@ -61,8 +59,8 @@ func HandleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (
 	}
 
 	res, err := g.Send(email)
-	log.Printf("Response:\n%#v", res)
-	
+	log.Printf("%#v", res)
+
 	if err != nil {
 		return events.APIGatewayProxyResponse{Body: err.Error(), StatusCode: http.StatusInternalServerError}, err
 	}
